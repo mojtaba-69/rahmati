@@ -1,0 +1,17 @@
+.sidebar__nav-item{
+    padding: 12px;
+    text-decoration: none;
+    border-bottom: 1px solid #ffc107;
+
+    span{
+        font-size: 14px;
+        color: #adb5bd;
+        padding-right: 5px;
+    }
+} 
+.sidebar__nav-item:hover{
+    background-color: $dark;
+    span{
+        color: white;
+    }
+}  

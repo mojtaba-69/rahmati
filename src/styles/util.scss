@@ -1,0 +1,5 @@
+@mixin __element($element) {
+  &__#{$element} {
+    @content;
+  }
+}
