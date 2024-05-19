@@ -1,5 +1,12 @@
-import { CAvatar, CButton, CContainer, CBadge, CCardBody,
-  CCollapse } from "@coreui/react";
+import {
+  CAvatar,
+  CButton,
+  CContainer,
+  CBadge,
+  CCardBody,
+  CCollapse,
+ 
+} from "@coreui/react";
 import { CSmartTable } from "@coreui/react-pro";
 import { cilPeople, cilSearch } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
@@ -10,10 +17,8 @@ import { usersData } from "../userList";
 
 const UsersList = () => {
   const [details, setDetails] = useState([]);
-  const deleteUser=(userId)=>{
-     console.log(userId)
-  }
-  const {userIdentity,userRole,userName,userEmail,userPhone,userAddress,activeUser,verifiedUser } = useSelector((state) => state.adduser);
+
+
   
   const columns = [
     {
@@ -57,17 +62,17 @@ const UsersList = () => {
       key: "state",
       label: "فعال/غیرفعال",
       sorter: false,
-      filter:false,
+      filter: false,
       _style: { width: "15%" },
     },
     {
       key: "status",
       label: "وضعیت",
       sorter: false,
-      filter:false,
+      filter: false,
       _style: { width: "20%" },
     },
-  
+
     {
       key: "more",
       label: "بیشتر",
@@ -82,8 +87,6 @@ const UsersList = () => {
       filter: false,
       _style: { width: "20%" },
     },
-
-  
   ];
   const toggleDetails = (index) => {
     const position = details.indexOf(index);
@@ -102,7 +105,6 @@ const UsersList = () => {
         return "success";
       case "غیرفعال":
         return "danger";
-     
     }
   };
   const getBadgeStatus = (status) => {
@@ -111,14 +113,12 @@ const UsersList = () => {
         return "success";
       case "تایید نشده":
         return "danger";
-     
     }
   };
 
   //----------------------------------------------------------------------
   return (
     <>
-       
       <CContainer fluid className=" p-3 border-bottom">
         <div className="mx-4">
           <h5>لیست کاربران</h5>
@@ -154,6 +154,7 @@ const UsersList = () => {
                   <CAvatar src={item.avatar} />
                 </td>
               ),
+            
               status: (item) => (
                 <td>
                   <CBadge
@@ -176,7 +177,7 @@ const UsersList = () => {
                   </CBadge>
                 </td>
               ),
-           
+
               more: (item) => {
                 return (
                   <td className="py-2">
@@ -189,7 +190,6 @@ const UsersList = () => {
                         toggleDetails(item.id);
                       }}
                     >
-                     
                       بیشتر
                     </CButton>
                   </td>
@@ -201,12 +201,8 @@ const UsersList = () => {
                     <CCardBody className="p-4 bg-light rounded text-end ">
                       <div>
                         <h6 className="fw-bold">اطلاعات</h6>
-                        <p>شماره همراه:  {item.phone}</p>
-                        <p>آدرس:  {item.address}</p>
-                       
-                          
-                      
-                       
+                        <p>شماره همراه: {item.phone}</p>
+                        <p>آدرس: {item.address}</p>
                       </div>
                     </CCardBody>
                   </CCollapse>
@@ -228,7 +224,7 @@ const UsersList = () => {
                     size="sm"
                     color="danger"
                     className="text-white"
-                    onClick={()=>deleteUser(item.id)}
+                    
                   >
                     حذف
                   </CButton>

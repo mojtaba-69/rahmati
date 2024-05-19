@@ -16,6 +16,7 @@ import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { usersData } from "../userList";
 import {setUser} from "../../../redux/adduser"
+
 const AddUser = () => {
   const [userIdentity,setUserIdentity]= useState("");
   const [userRole,setUserRole]= useState("");
@@ -42,21 +43,21 @@ const AddUser = () => {
     console.log(verifiedUser)
     console.log(userRegistered);
    
-    dispatch(
+    // dispatch(
      
-      setUser({
-        userIdentity:userIdentity,
-        userRole:userRole,
-        userName:userName,
-        userEmail:userEmail,
-        userPhone:userPhone,
-        userAddress:userAddress,
-        userRegistered:userRegistered,
-        activeUser:activeUser,
-        verifiedUser:verifiedUser,
-      })
+    //   setUser({
+    //     userIdentity:userIdentity,
+    //     userRole:userRole,
+    //     userName:userName,
+    //     userEmail:userEmail,
+    //     userPhone:userPhone,
+    //     userAddress:userAddress,
+    //     userRegistered:userRegistered,
+    //     activeUser:activeUser,
+    //     verifiedUser:verifiedUser,
+    //   })
 
-    );
+    // );
   
   }
 

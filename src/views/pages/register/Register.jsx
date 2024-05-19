@@ -16,56 +16,42 @@ import {
 } from "@coreui/react";
 import CIcon from "@coreui/icons-react";
 import svgLogin from "../../../assets/svg/login.svg";
-import { cilLockLocked, cilUser } from "@coreui/icons";
+import { cilLockLocked, cilMobile, cilUser } from "@coreui/icons";
 import { useDispatch, useSelector } from "react-redux";
 import { setShowLogin } from "../../../redux/login";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
 
-const Login = () => {
+const Register = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [name, setName] = useState("");
   let message = "";
 
-  // api call login ---------------------------------------------
-  const login = (event) => {
+  //call api ... register--------------------------------
+  const register = (event) => {
     event.preventDefault();
 
     axios
-      .post("https://farawin.iran.liara.run/api/user/login", {
+      .post("https://farawin.iran.liara.run/api/user", {
         username: username,
         password: password,
+        name: name,
       })
       .then((res) => {
-        //  console.log('res:'+ res.data.code + res.data.message)
+        // console.log("res:" + res.data.code+"\n" + res.data.message)
         const status = res.data.code;
         console.log(res.data.message);
         console.log(status);
         if (status === "200") {
           message = res.data.message;
-          const token = res.data.token;
-          window.localStorage.setItem("token", token);
         }
       })
       .catch((err) => console.log("error" + err));
   };
 
-  
+  //------------------------------------------------------------------
 
-  //------------------------------------------------------------
-  const btnLoginClick = (e) => {
-    // const invalidLogin = document.querySelector("#invalidLogin");
-    // const Link = document.querySelector("#link");
-    // console.log(Link);
-    // if (username === "FarzaneRahmati" && password === "12345") {
-    //   Link.setAttribute("href","/");
-    //   // dispatch(setShowLogin({ loginshow:!loginshow }));
-    //   invalidLogin.classList.add("d-none");
-    // } else {
-    //   invalidLogin.classList.remove("d-none");
-    //   invalidLogin.classList.add("d-block");
-    // }
-  };
-  //--------------------------------------
   return (
     <CContainer
       fluid
@@ -77,8 +63,8 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <CForm onSubmit={login}>
-                    <h4 className="mb-4">ورود مدیر</h4>
+                  <CForm onSubmit={register}>
+                    <h4 className="mb-4">ثبت نام </h4>
                     <hr className="border border-dark border-1" />
                     <hr
                       className="border border-dark border-2 mb-4"
@@ -87,7 +73,7 @@ const Login = () => {
                     <div className="px-lg-5">
                       <CInputGroup className="mb-3  ">
                         <CInputGroupText className="bg-body border-0">
-                          <CIcon icon={cilUser} className="text-dark " />
+                          <CIcon icon={cilMobile} className="text-dark " />
                         </CInputGroupText>
                         <CFormInput
                           onChange={(e) => setUsername(e.target.value)}
@@ -99,7 +85,7 @@ const Login = () => {
                           minLength={11}
                         />
                       </CInputGroup>
-                      <CInputGroup className="mb-2">
+                      <CInputGroup className="mb-3">
                         <CInputGroupText className="bg-body border-0">
                           <CIcon icon={cilLockLocked} className="text-dark " />
                         </CInputGroupText>
@@ -113,10 +99,24 @@ const Login = () => {
                           minLength={8}
                         />
                       </CInputGroup>
+                      <CInputGroup>
+                        <CInputGroupText className="bg-body border-0">
+                          <CIcon icon={cilUser} className="text-dark " />
+                        </CInputGroupText>
+                        <CFormInput
+                          onChange={(e) => setName(e.target.value)}
+                          id="nameInput"
+                          type="text"
+                          placeholder="نام و نام خانوادگی "
+                          autoComplete="current-password"
+                          className="rounded-2"
+                          minLength={3}
+                        />
+                      </CInputGroup>
                       <CRow className="mb-3 text-danger me-2 text-nowrap">
-                        <span className="d-none" id="invalidLogin">
+                        {/* <span className="d-none" id="invalidLogin">
                           * نام کاربری یا رمز عبور صحیح نمی باشد!
-                        </span>
+                        </span> */}
                       </CRow>
 
                       <CRow className="justify-content-center">
@@ -124,14 +124,16 @@ const Login = () => {
                           <a id="link">
                             <CButton
                               type="submit"
-                              // onClick={() => login()}
                               color="primary"
                               className="px-4 bg-primary fw-bold "
                             >
-                              ورود
+                              ثبت نام
                             </CButton>
                           </a>
                         </CCol>
+                        <span className="text-center mt-2 text-gray">
+                          {message}
+                        </span>
                       </CRow>
                     </div>
                     <hr className="border border-dark border-2" />
@@ -157,4 +159,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

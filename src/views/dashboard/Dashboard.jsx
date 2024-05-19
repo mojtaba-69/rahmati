@@ -21,14 +21,53 @@ import CIcon from "@coreui/icons-react";
 import { cilArrowTop, cilPeople, cilArrowBottom } from "@coreui/icons";
 import { CChartLine } from "@coreui/react-chartjs";
 import { usersData } from "../user-management/userList";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
+
 const Dashboard = () => {
+  const [userList, setUserList] = useState([]);
+  const [contactList, setContactList] = useState([]);
+
+  //call api ...display userList in table 1 & display contactList in table 2
+  useEffect(() => {
+    getAllUsers();
+    getAllContact();
+  }, []);
+
+  const getAllUsers = () => {
+    axios
+      .get("https://farawin.iran.liara.run/api/user")
+      .then((res) => {
+        if (res.data.code === "200") {
+          setUserList(res.data.userList);
+          console.log(res.data)
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+  //-------------------
+  const getAllContact = () => {
+    const header = {
+      accept: "application/json",
+      authorization: window.localStorage.token,
+    };
+    axios
+      .get("https://farawin.iran.liara.run/api/contact", {
+        headers: header,
+      })
+      .then((res) => {
+        if (res.data.code === "200") {
+          setContactList(res.data.contactList);
+          console.log(res.data);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  //------------------------------------------------
   return (
     <>
-      {/* <CHeader>
-        <CContainer fluid>
-          <CHeaderBrand href="#">گزارش </CHeaderBrand>
-        </CContainer>
-      </CHeader> */}
       <CContainer fluid className=" p-3 border-bottom">
         <div className="mx-4">
           <h5>داشبورد</h5>
@@ -371,6 +410,7 @@ const Dashboard = () => {
               <CCardHeader>کاربران جدید در روز جاری</CCardHeader>
               <CCardBody>
                 <CRow>
+                  
                   <CCol xs={12} md={6} xl={6}>
                     <CRow className=" gap-2">
                       <CCol sm={12}>
@@ -409,7 +449,7 @@ const Dashboard = () => {
                           </CTableHead>
 
                           <CTableBody>
-                            {usersData.map((item, index) => (
+                            {userList.map((user, index) => (
                               <CTableRow
                                 v-for="item in tableItems"
                                 key={index}
@@ -420,11 +460,12 @@ const Dashboard = () => {
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center ">
-                                  <CAvatar size="lg" src={item.avatar} />
+                                  {/* <CAvatar size="lg" src={item.avatar} /> */}
+                                  <div>{user.username}</div>
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center table-item ">
-                                  <div>{item.name}</div>
+                                  <div>{user.name}</div>
                                 </CTableDataCell>
                               </CTableRow>
                             ))}
@@ -472,7 +513,7 @@ const Dashboard = () => {
                           </CTableHead>
 
                           <CTableBody>
-                            {usersData.map((item, index) => (
+                            {contactList.map((contact, index) => (
                               <CTableRow
                                 v-for="item in tableItems"
                                 key={index}
@@ -483,11 +524,12 @@ const Dashboard = () => {
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center ">
-                                  <CAvatar size="lg" src={item.avatar} />
+                                  {/* <CAvatar size="lg" src={item.avatar} /> */}
+                                  <div>{contact.username}</div>
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center table-item ">
-                                  <div>{item.name}</div>
+                                  <div>{contact.name}</div>
                                 </CTableDataCell>
                               </CTableRow>
                             ))}
