@@ -20,52 +20,63 @@ import {
 import CIcon from "@coreui/icons-react";
 import { cilArrowTop, cilPeople, cilArrowBottom } from "@coreui/icons";
 import { CChartLine } from "@coreui/react-chartjs";
-import { usersData } from "../user-management/userList";
+import  usersData  from "../user-management/usersData";
+import advertisingData from "../advertising-management/advertising-list/advertisingData";
 import { useEffect } from "react";
 import axios from "axios";
 import { useState } from "react";
+import emptyAvatar from "../../assets/images/avatars/emptyAvatar.jpg"
 
 const Dashboard = () => {
-  const [userList, setUserList] = useState([]);
-  const [contactList, setContactList] = useState([]);
+  const [userList, setUserList] = useState(usersData);
+  const [adsList, setAdsList] = useState(advertisingData);
 
-  //call api ...display userList in table 1 & display contactList in table 2
+
+  
   useEffect(() => {
-    getAllUsers();
-    getAllContact();
+  
+    getUsers();
+    getAds();
   }, []);
 
-  const getAllUsers = () => {
-    axios
-      .get("https://farawin.iran.liara.run/api/user")
-      .then((res) => {
-        if (res.data.code === "200") {
-          setUserList(res.data.userList);
-          console.log(res.data)
-        }
-      })
-      .catch((err) => console.log(err));
-  };
-  //-------------------
-  const getAllContact = () => {
-    const header = {
-      accept: "application/json",
-      authorization: window.localStorage.token,
-    };
-    axios
-      .get("https://farawin.iran.liara.run/api/contact", {
-        headers: header,
-      })
-      .then((res) => {
-        if (res.data.code === "200") {
-          setContactList(res.data.contactList);
-          console.log(res.data);
-        }
-      })
-      .catch((err) => console.log(err));
-  };
+ 
+const getUsers = () => {
+  axios.get("http://localhost:5000/api/admin/users",{
+    headers:{
+      "x-auth-token":window.localStorage.token,
+    }
+  })
+   .then((res)=>{
+    if(res.status === 200){
+         setUserList(res.data.data.users);
+        
+         
+      }
+    })
+   .catch((err)=>{console.log('error:'+ err)})
+};
 
-  //------------------------------------------------
+const getAds = () => {
+  axios
+    .get("http://localhost:5000/api/admin/ads", {
+      headers: {
+        "x-auth-token": window.localStorage.token,
+      },
+    })
+    .then((res) => {
+      if (res.status === 200) {
+        setAdsList(res.data.data.ads);
+        
+      }
+    })
+    .catch((err) => {
+      console.log("error:" + err);
+    });
+};
+
+  
+
+
   return (
     <>
       <CContainer fluid className=" p-3 border-bottom">
@@ -81,7 +92,8 @@ const Dashboard = () => {
               color="primary"
               value={
                 <>
-                  2.000{" "}
+                  {userList.length + " "}
+                  <span className="fs-5 fw-normal">نفر</span>{" "}
                   <span className="fs-6 fw-normal">
                     ( 23.9% <CIcon icon={cilArrowTop} />)
                   </span>
@@ -163,7 +175,8 @@ const Dashboard = () => {
               color="info"
               value={
                 <>
-                  3.000{" "}
+                  {adsList.length + " "}
+                  <span className="fs-6 fw-normal">آگهی</span>{" "}
                   <span className="fs-6 fw-normal">
                     ( 10.9% <CIcon icon={cilArrowTop} />)
                   </span>
@@ -245,7 +258,8 @@ const Dashboard = () => {
               color="warning"
               value={
                 <>
-                  60.{" "}
+                  {userList.filter((user)=>(user.role == "کارجو")).filter((user)=>(user.date == new Date().toLocaleDateString('fa-ir'))).length}{" "}
+                  <span className="fs-5 fw-normal">نفر</span>{" "}
                   <span className="fs-6 fw-normal">
                     ( 3.6% <CIcon icon={cilArrowBottom} />)
                   </span>
@@ -327,7 +341,8 @@ const Dashboard = () => {
               color="danger"
               value={
                 <>
-                  20{" "}
+                   {userList.filter((user)=>(user.role == "کارفرما")).filter((user)=>(user.date == new Date().toLocaleDateString('fa-ir'))).length}{" "}
+                  <span className="fs-5 fw-normal">نفر</span>{" "}
                   <span className="fs-6 fw-normal">
                     ( 3.2% <CIcon icon={cilArrowTop} />)
                   </span>
@@ -410,7 +425,6 @@ const Dashboard = () => {
               <CCardHeader>کاربران جدید در روز جاری</CCardHeader>
               <CCardBody>
                 <CRow>
-                  
                   <CCol xs={12} md={6} xl={6}>
                     <CRow className=" gap-2">
                       <CCol sm={12}>
@@ -418,7 +432,7 @@ const Dashboard = () => {
                           <div className="text-medium-emphasis small">
                             کارجو
                           </div>
-                          <div className="fs-5 fw-semibold">40 نفر</div>
+                          <div className="fs-5 fw-semibold">{userList.filter((user)=>(user.role == "کارجو")).length} نفر</div>
                         </div>
                       </CCol>
 
@@ -449,7 +463,7 @@ const Dashboard = () => {
                           </CTableHead>
 
                           <CTableBody>
-                            {userList.map((user, index) => (
+                            {userList.filter((user)=>(user.role == "کارجو")).map((user, index) => (
                               <CTableRow
                                 v-for="item in tableItems"
                                 key={index}
@@ -460,12 +474,12 @@ const Dashboard = () => {
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center ">
-                                  {/* <CAvatar size="lg" src={item.avatar} /> */}
-                                  <div>{user.username}</div>
+                                  <CAvatar size="sm" src={ user.avatar || emptyAvatar} />
+                                  
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center table-item ">
-                                  <div>{user.name}</div>
+                                  <div>{user.fullName}</div>
                                 </CTableDataCell>
                               </CTableRow>
                             ))}
@@ -482,7 +496,7 @@ const Dashboard = () => {
                           <div className="text-medium-emphasis small">
                             کارفرما
                           </div>
-                          <div className="fs-5 fw-semibold">15 نفر</div>
+                          <div className="fs-5 fw-semibold">{userList.filter((user)=>(user.role == "کارفرما")).length} نفر</div>
                         </div>
                       </CCol>
 
@@ -513,7 +527,7 @@ const Dashboard = () => {
                           </CTableHead>
 
                           <CTableBody>
-                            {contactList.map((contact, index) => (
+                            {userList.filter((user)=>(user.role == "کارفرما")).map((user, index) => (
                               <CTableRow
                                 v-for="item in tableItems"
                                 key={index}
@@ -524,12 +538,12 @@ const Dashboard = () => {
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center ">
-                                  {/* <CAvatar size="lg" src={item.avatar} /> */}
-                                  <div>{contact.username}</div>
+                                  <CAvatar size="sm" src={user.avatar || emptyAvatar} />
+                                  
                                 </CTableDataCell>
 
                                 <CTableDataCell className="text-center table-item ">
-                                  <div>{contact.name}</div>
+                                  <div>{user.fullName}</div>
                                 </CTableDataCell>
                               </CTableRow>
                             ))}

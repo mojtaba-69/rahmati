@@ -8,12 +8,45 @@ import {
   CImage,
 } from "@coreui/react";
 import { CSmartTable } from "@coreui/react-pro";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { requestData } from "./requestData";
+import emptyAvatar from "../../../assets/images/avatars/emptyAvatar.jpg";
+import axios from "axios";
 const RequestsList = () => {
   const { sidebarshow } = useSelector((state) => state.sidebar);
   const [details, setDetails] = useState([]);
+  const [requestList, setRequestList] = useState(requestData);
+  const [userList, setUserList] = useState([]);
+
+  useEffect(() => {
+    getRequests();
+  }, []);
+
+  const getRequests = () => {
+    axios
+      .get("http://localhost:5000/api/admin/requests", {
+        headers: {
+          "x-auth-token": window.localStorage.token,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setRequestList(res.data.data.requests);
+          setUserList(res.data.data.users);
+        }
+      })
+      .catch((err) => {
+        console.log("error:" + err);
+      });
+  };
+
+  const getJobSeeker = (userId) => {
+    const jobSeeker= userList.filter((user) => user._id == userId);
+    return jobSeeker[0];
+  };
+  //--------------------------------------------------
+
   const columns = [
     {
       key: "title",
@@ -30,37 +63,37 @@ const RequestsList = () => {
       _style: { width: "10%" },
     },
     {
-      key: "username",
+      key: "jobseeker",
       label: "نام کارجو ",
       filter: true,
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "15%" },
     },
     {
       key: "email",
       label: "ایمیل",
       filter: true,
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "15%" },
     },
     {
-      key: "registered",
+      key: "date",
       label: "زمان ایجاد",
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
     {
-      key: "status",
+      key: "isAccepted",
       label: "وضعیت",
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
     {
       key: "caption",
       label: "توضیحات",
       sorter: false,
       filter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
 
     {
@@ -68,17 +101,15 @@ const RequestsList = () => {
       label: "عملیات",
       sorter: false,
       filter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
   ];
 
-  const getBadge = (status) => {
-    switch (status) {
-      case "تایید شده":
-        return "success";
-      case "تایید نشده":
-        return "danger";
-    }
+  const getBadgeAccepted = (isAccepted) => {
+    return isAccepted ? "success" : "danger";
+  };
+  const getTextAccepted = (isAccepted) => {
+    return isAccepted ? "تایید شده" : "تایید نشده";
   };
 
   const toggleDetails = (index) => {
@@ -109,7 +140,7 @@ const RequestsList = () => {
             columnFilter
             columnSorter
             // footer
-            items={requestData}
+            items={requestList}
             // itemsPerPageSelect
             // itemsPerPage={1}
             pagination
@@ -120,24 +151,39 @@ const RequestsList = () => {
             //   // console.log(items)
             // }}
             scopedColumns={{
+              title: (item) => (
+                <td>
+                  <span>{item.title}</span>
+                </td>
+              ),
               profile: (item) => (
                 <td>
-                  <CAvatar src={item.avatar} />
+                  <CAvatar src={item.avatar || emptyAvatar} />
                 </td>
               ),
-              username: (item) => (
+              jobseeker: (item) => (
                 <td>
-                  <span>{item.name}</span>
+                  <span>{item.jobSeekerName || getJobSeeker(item.userId).fullName }</span>
                 </td>
               ),
-              status: (item) => (
+              email: (item) => (
+                <td>
+                  <span>{item.email || getJobSeeker(item.userId).email}</span>
+                </td>
+              ),
+              date: (item) => (
+                <td>
+                  <span>{item.date}</span>
+                </td>
+              ),
+              isAccepted: (item) => (
                 <td>
                   <CBadge
                     className="p-2 text-center "
                     style={{ width: "65px" }}
-                    color={getBadge(item.status)}
+                    color={getBadgeAccepted(item.isAccepted)}
                   >
-                    {item.status}
+                    {getTextAccepted(item.isAccepted)}
                   </CBadge>
                 </td>
               ),
@@ -150,10 +196,9 @@ const RequestsList = () => {
                       shape="square"
                       size="sm"
                       onClick={() => {
-                        toggleDetails(item.id);
+                        toggleDetails(item._id);
                       }}
                     >
-                      {/* {details.includes(item.id) ? "Hide" : "Show"} */}
                       توضیحات
                     </CButton>
                   </td>
@@ -161,7 +206,7 @@ const RequestsList = () => {
               },
               details: (item) => {
                 return (
-                  <CCollapse visible={details.includes(item.id)}>
+                  <CCollapse visible={details.includes(item._id)}>
                     <CCardBody className="p-4 bg-light rounded text-end ">
                       <div>
                         <h6 className="fw-bold">{"توضیحات"}</h6>

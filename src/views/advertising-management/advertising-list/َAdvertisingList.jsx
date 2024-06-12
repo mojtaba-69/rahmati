@@ -8,13 +8,47 @@ import {
   CImage,
 } from "@coreui/react";
 import { CSmartTable } from "@coreui/react-pro";
-import { advertisingData } from "./advertisingData";
-import { useState } from "react";
-import Model from "react-modal";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
+import emptyAvatar from "../../../assets/images/avatars/emptyAvatar.jpg";
+import  advertisingData from "./advertisingData";
+import axios from "axios";
+
+
 const AdvertisingList = () => {
   const { sidebarshow } = useSelector((state) => state.sidebar);
   const [details, setDetails] = useState([]);
+  const [adsList, setAdsList] = useState(advertisingData);
+  const [userList, setUserList] = useState([]);
+  
+  useEffect(() => {
+    getAds();
+    
+  }, []);
+
+  const getEmployer = (userId) => {
+    const employer= userList.filter((user) => user._id == userId);
+    return employer[0];
+  };
+
+  const getAds = () => {
+    axios
+      .get("http://localhost:5000/api/admin/ads", {
+        headers: {
+          "x-auth-token": window.localStorage.token,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setAdsList(res.data.data.ads);
+          setUserList(res.data.data.users);
+        }
+      })
+      .catch((err) => {
+        console.log("error:" + err);
+      });
+  };
+
   const columns = [
     {
       key: "title",
@@ -35,26 +69,33 @@ const AdvertisingList = () => {
       label: " نام کارفرما",
       filter: true,
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "15%" },
     },
     {
-      key: "registered",
+      key: "email",
+      label: "ایمیل",
+      filter: true,
+      sorter: false,
+      _style: { width: "15%" },
+    },
+    {
+      key: "date",
       label: "تاریخ",
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
     {
-      key: "state",
+      key: "isActive",
       label: "فعال/غیرفعال",
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
     {
       key: "caption",
       label: "توضیحات",
       sorter: false,
       filter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
 
     {
@@ -62,18 +103,15 @@ const AdvertisingList = () => {
       label: "عملیات",
       sorter: false,
       filter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
   ];
 
-  const getBadge = (state) => {
-    switch (state) {
-      case "فعال":
-        return "success";
-      case "غیرفعال":
-        return "danger";
-     
-    }
+  const getBadgeActive = (isActive) => {
+    return isActive ? "success" : "secondary";
+  };
+  const getTextActive = (isActive) => {
+    return isActive ? "فعال" : "غیرفعال";
   };
 
   const toggleDetails = (index) => {
@@ -86,6 +124,7 @@ const AdvertisingList = () => {
     }
     setDetails(newDetails);
   };
+
   return (
     <>
       <CContainer fluid className=" p-3 border-bottom">
@@ -99,40 +138,49 @@ const AdvertisingList = () => {
             // activePage={2}
             // cleaner
             // clickableRows
-
             columns={columns}
             columnFilter
             columnSorter
-            // footer
-            items={advertisingData}
+            items={adsList}
             // itemsPerPageSelect
             // itemsPerPage={1}
             pagination
-            // onFilteredItemsChange={(items) => {
-            //   // console.log(items)
-            // }}
-            // onSelectedItemsChange={(items) => {
-            //   // console.log(items)
-            // }}
             scopedColumns={{
+              title: (item) => (
+                <td>
+                   <span>{item.title}</span>
+                   
+                </td>
+              ),
               profile: (item) => (
                 <td>
-                  <CAvatar src={item.avatar} />
+                  <CAvatar src={item.avatar || emptyAvatar} />
                 </td>
               ),
               employer: (item) => (
                 <td>
-                  <span>{item.employerName}</span>
+              
+                  <span>{ item.employerName || getEmployer(item.userId).fullName }</span>
                 </td>
               ),
-              state: (item) => (
+              email: (item) => (
+                <td>
+                  
+                  <span>{ item.email || getEmployer(item.userId).email}</span>
+                </td>
+              ),
+              date: (item) => (
+                <td>{item.date}</td>
+
+              ),
+              isActive: (item) => (
                 <td>
                   <CBadge
                     className="p-2 text-center"
                     style={{ width: "55px" }}
-                    color={getBadge(item.state)}
+                    color={getBadgeActive(item.isActive)}
                   >
-                    {item.state}
+                    {getTextActive(item.isActive)}
                   </CBadge>
                 </td>
               ),
@@ -145,10 +193,9 @@ const AdvertisingList = () => {
                       shape="square"
                       size="sm"
                       onClick={() => {
-                        toggleDetails(item.id);
+                        toggleDetails(item._id);
                       }}
                     >
-                     
                       توضیحات
                     </CButton>
                   </td>
@@ -156,20 +203,20 @@ const AdvertisingList = () => {
               },
               details: (item) => {
                 return (
-                  <CCollapse visible={details.includes(item.id)}>
+                  <CCollapse visible={details.includes(item._id)}>
                     <CCardBody className="p-4 bg-light rounded text-end ">
                       <div>
                         <h6 className="fw-bold">{"توضیحات"}</h6>
                         <p>{item.caption}</p>
 
-                        {item.images.map((img) => (
+                        {/* {item.images.map((img) => (
                           <CImage
                             src={img}
                             width={100}
                             height={80}
                             className="bg-danger ms-2 rounded"
                           />
-                        ))}
+                        ))} */}
                       </div>
                     </CCardBody>
                   </CCollapse>

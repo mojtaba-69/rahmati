@@ -95,7 +95,7 @@ const AdminSidebar = () => {
           </CNavGroup>
           //-------------------------------
           <CNavGroup toggler="مدیریت دسته های آگهی" className="navgroup">
-            <Link to={"/ads-category-list"} className="text-decoration-none ">
+            <Link to={"/category-list"} className="text-decoration-none ">
               <CNavItem className="sidebar__nav-item border-top border-1 border-warning">
                 <span>لیست دسته های آگهی</span>
               </CNavItem>

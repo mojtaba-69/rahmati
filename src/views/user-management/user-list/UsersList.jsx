@@ -5,21 +5,44 @@ import {
   CBadge,
   CCardBody,
   CCollapse,
- 
 } from "@coreui/react";
 import { CSmartTable } from "@coreui/react-pro";
 import { cilPeople, cilSearch } from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
-import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { usersData } from "../userList";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import usersData from "../usersData";
+import emptyAvatar from "../../../assets/images/avatars/emptyAvatar.jpg";
 
 
 const UsersList = () => {
   const [details, setDetails] = useState([]);
+  const [userList, setUserList] = useState(usersData);
+
+  useEffect(() => {
+    getUsers();
+  }, []);
 
 
-  
+  const getUsers = () => {
+    axios
+      .get("http://localhost:5000/api/admin/users", {
+        headers: {
+          "x-auth-token": window.localStorage.token,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setUserList(res.data.data.users);
+        }
+      })
+      .catch((err) => {
+        console.log("error:" + err);
+        // setUserList(usersData)
+      });
+  };
+  //--------------------------------------------
+
   const columns = [
     {
       key: "identity",
@@ -38,7 +61,7 @@ const UsersList = () => {
       key: "name",
       label: "نام / نام شرکت",
       sorter: false,
-      _style: { width: "20%" },
+      _style: { width: "15%" },
     },
     {
       key: "email",
@@ -47,7 +70,7 @@ const UsersList = () => {
       _style: { width: "20%" },
     },
     {
-      key: "registered",
+      key: "date",
       label: " تاریخ",
       sorter: false,
       _style: { width: "10%" },
@@ -56,21 +79,21 @@ const UsersList = () => {
       key: "role",
       label: "نقش",
       sorter: false,
-      _style: { width: "15%" },
+      _style: { width: "10%" },
     },
     {
-      key: "state",
+      key: "isActive",
       label: "فعال/غیرفعال",
       sorter: false,
       filter: false,
       _style: { width: "15%" },
     },
     {
-      key: "status",
+      key: "isAccepted",
       label: "وضعیت",
       sorter: false,
       filter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
 
     {
@@ -78,14 +101,14 @@ const UsersList = () => {
       label: "بیشتر",
       sorter: false,
       filter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
     {
       key: "operation",
       label: "عملیات",
       sorter: false,
       filter: false,
-      _style: { width: "20%" },
+      _style: { width: "10%" },
     },
   ];
   const toggleDetails = (index) => {
@@ -99,21 +122,18 @@ const UsersList = () => {
     setDetails(newDetails);
   };
 
-  const getBadgeState = (state) => {
-    switch (state) {
-      case "فعال":
-        return "success";
-      case "غیرفعال":
-        return "danger";
-    }
+  const getBadgeActive = (isActive) => {
+    return isActive ? "success" : "secondary";
   };
-  const getBadgeStatus = (status) => {
-    switch (status) {
-      case "تایید شده":
-        return "success";
-      case "تایید نشده":
-        return "danger";
-    }
+  const getTextActive = (isActive) => {
+    return isActive ? "فعال" : "غیرفعال";
+  };
+
+  const getBadgeAccepted = (isAccepted) => {
+    return isAccepted ? "success" : "danger";
+  };
+  const getTextAccepted = (state) => {
+    return state ? "تایید شده" : "تایید نشده";
   };
 
   //----------------------------------------------------------------------
@@ -133,7 +153,7 @@ const UsersList = () => {
             columns={columns}
             columnFilter
             columnSorter
-            items={usersData}
+            items={userList}
             // itemsPerPageSelect
             // itemsPerPage={1}
             pagination
@@ -151,33 +171,51 @@ const UsersList = () => {
               ),
               avatar: (item) => (
                 <td>
-                  <CAvatar src={item.avatar} />
+                  <CAvatar src={item.avatar||emptyAvatar} />
                 </td>
               ),
-            
-              status: (item) => (
+              name: (item) => (
+                <td>
+                  <span>{item.fullName}</span>
+                </td>
+              ),
+              email: (item) => (
+                <td>
+                  <span>{item.email}</span>
+                </td>
+              ),
+              date: (item) => (
+                <td>
+                  <span>{item.date}</span>
+                </td>
+              ),
+              role: (item) => (
+                <td>
+                  <span>{item.role}</span>
+                </td>
+              ),
+              isActive: (item) => (
                 <td>
                   <CBadge
                     className="p-2 text-center"
                     style={{ width: "60px" }}
-                    color={getBadgeStatus(item.status)}
+                    color={getBadgeActive(item.isActive)}
                   >
-                    {item.status}
+                    {getTextActive(item.isActive)}
                   </CBadge>
                 </td>
               ),
-              state: (item) => (
+              isAccepted: (item) => (
                 <td>
                   <CBadge
                     className="p-2 text-center"
-                    style={{ width: "55px" }}
-                    color={getBadgeState(item.state)}
+                    style={{ width: "60px" }}
+                    color={getBadgeAccepted(item.isAccepted)}
                   >
-                    {item.state}
+                    {getTextAccepted(item.isAccepted)}
                   </CBadge>
                 </td>
               ),
-
               more: (item) => {
                 return (
                   <td className="py-2">
@@ -187,7 +225,7 @@ const UsersList = () => {
                       shape="square"
                       size="sm"
                       onClick={() => {
-                        toggleDetails(item.id);
+                        toggleDetails(item._id);
                       }}
                     >
                       بیشتر
@@ -197,11 +235,11 @@ const UsersList = () => {
               },
               details: (item) => {
                 return (
-                  <CCollapse visible={details.includes(item.id)}>
+                  <CCollapse visible={details.includes(item._id )}>
                     <CCardBody className="p-4 bg-light rounded text-end ">
                       <div>
                         <h6 className="fw-bold">اطلاعات</h6>
-                        <p>شماره همراه: {item.phone}</p>
+                        <p>شماره همراه: {item.mobile}</p>
                         <p>آدرس: {item.address}</p>
                       </div>
                     </CCardBody>
@@ -224,7 +262,6 @@ const UsersList = () => {
                     size="sm"
                     color="danger"
                     className="text-white"
-                    
                   >
                     حذف
                   </CButton>

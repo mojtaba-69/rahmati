@@ -21,7 +21,7 @@ const AdminContent = () => {
           <Route path="/advertising-list" element={<AdvertisingList />} />
           <Route path="/add-advertising" element={<AddAdvertising />} />
           <Route path="/add-advertising" element={<AdsCategoryList />} />
-          <Route path="/ads-category-list" element={<AdsCategoryList />} />
+          <Route path="/category-list" element={<AdsCategoryList />} />
           <Route path="/add-category" element={<AddCategory />} />
           <Route path="/requests-list" element={<RequestsList />} />
           <Route path="/add-request" element={<AddRequest />} />

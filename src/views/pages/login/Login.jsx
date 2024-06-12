@@ -22,49 +22,54 @@ import { setShowLogin } from "../../../redux/login";
 import axios from "axios";
 
 const Login = () => {
-  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  let message = "";
+
 
   // api call login ---------------------------------------------
-  const login = (event) => {
+  // const login = (event) => {
+  //   event.preventDefault();
+
+  //   axios
+  //     .post("https://farawin.iran.liara.run/api/user/login", {
+  //       username: username,
+  //       password: password,
+  //     })
+  //     .then((res) => {
+  //       //  console.log('res:'+ res.data.code + res.data.message)
+  //       const status = res.data.code;
+  //       console.log(res.data.message);
+  //       console.log(status);
+  //       if (status === "200") {
+  //         message = res.data.message;
+  //         const token = res.data.token;
+  //         window.localStorage.setItem("token", token);
+  //       }
+  //     })
+  //     .catch((err) => console.log("error" + err));
+  // };
+
+  const login = (event)=>{
     event.preventDefault();
 
     axios
-      .post("https://farawin.iran.liara.run/api/user/login", {
-        username: username,
+      .post("http://localhost:5000/api/auth/login", {
+        email: email,
         password: password,
       })
       .then((res) => {
-        //  console.log('res:'+ res.data.code + res.data.message)
-        const status = res.data.code;
-        console.log(res.data.message);
-        console.log(status);
-        if (status === "200") {
-          message = res.data.message;
-          const token = res.data.token;
-          window.localStorage.setItem("token", token);
+        if(res.status === 200){
+          const token = res.data.data.token;
+          window.localStorage.setItem("token",token);
+
         }
+       
       })
       .catch((err) => console.log("error" + err));
-  };
-
+  }
   
 
-  //------------------------------------------------------------
-  const btnLoginClick = (e) => {
-    // const invalidLogin = document.querySelector("#invalidLogin");
-    // const Link = document.querySelector("#link");
-    // console.log(Link);
-    // if (username === "FarzaneRahmati" && password === "12345") {
-    //   Link.setAttribute("href","/");
-    //   // dispatch(setShowLogin({ loginshow:!loginshow }));
-    //   invalidLogin.classList.add("d-none");
-    // } else {
-    //   invalidLogin.classList.remove("d-none");
-    //   invalidLogin.classList.add("d-block");
-    // }
-  };
+
   //--------------------------------------
   return (
     <CContainer
@@ -90,13 +95,13 @@ const Login = () => {
                           <CIcon icon={cilUser} className="text-dark " />
                         </CInputGroupText>
                         <CFormInput
-                          onChange={(e) => setUsername(e.target.value)}
+                          onChange={(e) => setEmail(e.target.value)}
                           id="usernameInput"
-                          placeholder="شماره موبایل  "
-                          autoComplete="username"
+                          type="email"
+                          placeholder="ایمیل"
+                          autoComplete="email"
                           className="rounded-2"
-                          maxLength={11}
-                          minLength={11}
+                         
                         />
                       </CInputGroup>
                       <CInputGroup className="mb-2">

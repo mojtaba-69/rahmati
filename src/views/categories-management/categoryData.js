@@ -14,67 +14,78 @@ import { idText } from "typescript";
 
 
 
-const ads_category_data = [
+const categoryData = [
     {   
-        id:1,
+        _id:1,
         title:"اداری و مدیریت",
-        registered: '1402/12/01',
-       
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:2,
+        _id:2,
         title:"سرایداری و نظافت",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:3,
+        _id:3,
         title:"معماری،عمران،ساختمانی",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:4,
+        _id:4,
         title:"خدمات فروشگاه و رستوران",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:5,
+        _id:5,
         title:"رایانه و فناوری اطلاعات",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:6,
+        _id:6,
         title:"مالی و حسابداری و حقوقی",
-        registered: '1402/12/01',
+         date: '1402/12/01',
+         caption:'...'
     },
     {
-        id:7,
+        _id:7,
         title:"بازاریابی و فروش",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:8,
+        _id:8,
         title:"صنعتی و فنی و مهندسی",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:9,
+        _id:9,
         title:"آموزشی",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:10,
+        _id:10,
         title:"حمل و نقل",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:11,
+        _id:11,
         title:"درمانی و زیبایی و بهداشتی",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
     {
-        id:12,
+        _id:12,
         title:"هنری و رسانه",
-        registered: '1402/12/01',
+        date: '1402/12/01',
+        caption:'...'
     },
 ]
-export default ads_category_data;
+export default categoryData;

@@ -23,31 +23,47 @@ import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
 
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
   const [name, setName] = useState("");
-  let message = "";
+  const [lastName, setLastName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   //call api ... register--------------------------------
+  // const register = (event) => {
+  //   event.preventDefault();
+
+  //   axios
+  //     .post("https://farawin.iran.liara.run/api/user", {
+  //       username: username,
+  //       password: password,
+  //       name: name,
+  //     })
+  //     .then((res) => {
+  //       console.log("res:" + res.data.code+"\n" + res.data.message)
+  //       const status = res.data.code;
+  //       console.log(res.data.message);
+  //       console.log(status);
+  //       if (status === "200") {
+  //         message = res.data.message;
+  //       }
+  //     })
+  //     .catch((err) => console.log("error" + err));
+  // };
+
   const register = (event) => {
     event.preventDefault();
-
     axios
-      .post("https://farawin.iran.liara.run/api/user", {
-        username: username,
-        password: password,
+      .post("http://localhost:5000/api/auth/register", {
         name: name,
+        lastName: lastName,
+        email: email,
+        password: password,
+        isAdmin: true,
       })
       .then((res) => {
-        // console.log("res:" + res.data.code+"\n" + res.data.message)
-        const status = res.data.code;
-        console.log(res.data.message);
-        console.log(status);
-        if (status === "200") {
-          message = res.data.message;
-        }
+        console.log(res);
       })
-      .catch((err) => console.log("error" + err));
+      .catch((err) => console.log("error:" + err));
   };
 
   //------------------------------------------------------------------
@@ -71,18 +87,42 @@ const Register = () => {
                       style={{ "margin-top": "-12px" }}
                     />
                     <div className="px-lg-5">
-                      <CInputGroup className="mb-3  ">
+                      <CInputGroup className="mb-3">
                         <CInputGroupText className="bg-body border-0">
-                          <CIcon icon={cilMobile} className="text-dark " />
+                          <CIcon icon={cilUser} className="text-dark " />
                         </CInputGroupText>
                         <CFormInput
-                          onChange={(e) => setUsername(e.target.value)}
-                          id="usernameInput"
-                          placeholder="شماره موبایل  "
-                          autoComplete="username"
+                          onChange={(e) => setName(e.target.value)}
+                          id="nameInput"
+                          type="text"
+                          placeholder="نام"
                           className="rounded-2"
-                          maxLength={11}
-                          minLength={11}
+                          minLength={3}
+                        />
+                      </CInputGroup>
+                      <CInputGroup className="mb-3">
+                        <CInputGroupText className="bg-body border-0">
+                          <CIcon icon={cilUser} className="text-dark " />
+                        </CInputGroupText>
+                        <CFormInput
+                          onChange={(e) => setLastName(e.target.value)}
+                          id="lastnameInput"
+                          type="text"
+                          placeholder="نام خانوادگی"
+                          className="rounded-2"
+                          minLength={3}
+                        />
+                      </CInputGroup>
+                      <CInputGroup className="mb-3  ">
+                        <CInputGroupText className="bg-body border-0">
+                          <CIcon icon={cilUser} className="text-dark " />
+                        </CInputGroupText>
+                        <CFormInput
+                          onChange={(e) => setEmail(e.target.value)}
+                          id="emailInput"
+                          placeholder="ایمیل"
+                          autoComplete="email"
+                          className="rounded-2"
                         />
                       </CInputGroup>
                       <CInputGroup className="mb-3">
@@ -99,20 +139,7 @@ const Register = () => {
                           minLength={8}
                         />
                       </CInputGroup>
-                      <CInputGroup>
-                        <CInputGroupText className="bg-body border-0">
-                          <CIcon icon={cilUser} className="text-dark " />
-                        </CInputGroupText>
-                        <CFormInput
-                          onChange={(e) => setName(e.target.value)}
-                          id="nameInput"
-                          type="text"
-                          placeholder="نام و نام خانوادگی "
-                          autoComplete="current-password"
-                          className="rounded-2"
-                          minLength={3}
-                        />
-                      </CInputGroup>
+
                       <CRow className="mb-3 text-danger me-2 text-nowrap">
                         {/* <span className="d-none" id="invalidLogin">
                           * نام کاربری یا رمز عبور صحیح نمی باشد!
@@ -131,9 +158,7 @@ const Register = () => {
                             </CButton>
                           </a>
                         </CCol>
-                        <span className="text-center mt-2 text-gray">
-                          {message}
-                        </span>
+                        <span className="text-center mt-2 text-gray"></span>
                       </CRow>
                     </div>
                     <hr className="border border-dark border-2" />

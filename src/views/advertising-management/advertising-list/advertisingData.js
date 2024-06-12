@@ -1,170 +1,8 @@
-import fararesan from '../../../assets/images/image/fararesan.png';
-import tosesaman from '../../../assets/images/image/tosesaman.png';
-import img1 from '../../../assets/images/image/img1.png';
-import img2 from '../../../assets/images/image/img2.png';
-import img3 from '../../../assets/images/image/img3.png';
 
  
 
 
-// export const advertisingData = [
-//   {
-//     id: 1,
-//     avatar:fararesan,
-//     name: ' شرکت فرارسان برخط ',
-//     title:'استخدام برنامه نوس اندروید',
-//     image:img1,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد:',
-//     location:{
-//       city:"تهران",
-//       area:"زعفرانیه"
-//     }
-//   },
-//   {
-//     id: 2,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img2,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-//   {
-//     id: 3,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img3,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-//   {
-//     id: 4,
-//     avatar:fararesan,
-//     name: ' شرکت فرارسان برخط ',
-//     title:'استخدام برنامه نوس اندروید',
-//     image:img1,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد:',
-//     location:{
-//       city:"تهران",
-//       area:"زعفرانیه"
-//     }
-//   },
-//   {
-//     id: 5,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img2,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-//   {
-//     id: 6,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img3,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-//   {
-//     id: 7,
-//     avatar:fararesan,
-//     name: ' شرکت فرارسان برخط ',
-//     title:'استخدام برنامه نوس اندروید',
-//     image:img1,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد:',
-//     location:{
-//       city:"تهران",
-//       area:"زعفرانیه"
-//     }
-//   },
-//   {
-//     id: 8,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img2,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-//   {
-//     id: 9,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img3,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-//   {
-//     id: 10,
-//     avatar:fararesan,
-//     name: ' شرکت فرارسان برخط ',
-//     title:'استخدام برنامه نوس اندروید',
-//     image:img1,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد:',
-//     location:{
-//       city:"تهران",
-//       area:"زعفرانیه"
-//     }
-//   },
-//   {
-//     id: 11,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img2,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-//   {
-//     id: 12,
-//     avatar:tosesaman,
-//     name: ' شرکت توسعه سامان  ',
-//     title:'استخدام برنامه نوس فراند اند',
-//     image:img3,
-//     registered: '1402/12/01',
-//     caption:'با توجه به گسترش پروژه های شرکت در زمینه‌های مختلف، جذب نیروهای متخصص و علاقه‌مند به شرح ذیل انجام میپذیرد',
-//     location:{
-//       city:"مشهد",
-//       area:"احمدآباد"
-//     }
-//   },
-// ]
+
 import Avatar1 from '../../../assets/images/avatars/1.jpg';
 import Avatar2 from '../../../assets/images/avatars/2.jpg';
 import Avatar3 from '../../../assets/images/avatars/3.jpg';
@@ -175,204 +13,132 @@ import Avatar7 from '../../../assets/images/avatars/7.jpg';
 import Avatar8 from '../../../assets/images/avatars/8.jpg';
 import Avatar9 from '../../../assets/images/avatars/9.jpg';
 
+
  
 
 
 export const advertisingData = [
   {
-    id: 1,
-    categoryId:5,
+    _id: 1,
     title:"استخدام برنامه نویس php",
     employerName: 'فرزانه رحمتی ',
     avatar:Avatar1,
-    registered: '1402/12/01',
+    email:'farzane@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-       img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
+    isActive:true
   },
   {
-    id: 2,
-    categoryId:5,
+    _id: 2,
     title:"استخدام برنامه نویس php",
     employerName: ' علیرضارحمتی',
     avatar:Avatar2,
-    registered: '1402/12/01',
+    email:'ali@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-     img2,
-     img3,
-   ],
-   state:"فعال"
+    isActive:true
   },
   {
-    id: 3,
-    categoryId:5,
+    _id: 3,
     title:"استخدام برنامه نویس php",
     employerName: 'حمید رضوی  ',
     avatar:Avatar3,
-    registered: '1402/12/01',
+    email:'hamidrazavi@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-     img2,
-     img3,
-   ],
-   state:"فعال"
+    isActive:false
   },
   {
-    id: 4,
-    categoryId:5,
+    _id: 4,
     title:"استخدام برنامه نویس php",
     employerName: 'ثمین میرزایی  ',
     avatar:Avatar4,
-    registered: '1402/12/01',
+    email:'saminMirzaei@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-     img2,
-     img3,
-   ],
-   state:"فعال"
+    isActive:true
   },
   {
-    id: 5,
-    categoryId:5,
+    _id: 5,
     title:"استخدام برنامه نویس php",
     employerName: 'زهرا شاد ',
     avatar:Avatar5,
-    registered: '1402/12/01',
+    email:'Reza234@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-     img2,
-     img3,
-   ],
-   state:"فعال"
+    isActive:"فعال"
   },
   {
-    id: 6,
-    categoryId:5,
+    _id: 6,
     title:"استخدام برنامه نویس php",
     employerName: 'سهند نظری ',
     avatar:Avatar6,
-    registered: '1402/12/01',
+    date: '1402/12/01',
+    email:'ShNazari@gmail.com',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-     img2,
-     img3,
-   ],
-   state:"فعال"
+    isActive:"فعال"
   },
   {
-    id: 7,
-    categoryId:5,
+    _id: 7,
     title:"استخدام برنامه نویس php",
     employerName: 'سیما دانش ',
     avatar:Avatar7,
-    registered: '1402/12/01',
+    date: '1402/12/01',
+    email:'sima89@gmail.com',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
+    isActive:"فعال"
   },
   {
-    id: 8,
-    categoryId:5,
+    _id: 8,
     title:"استخدام برنامه نویس php",
     employerName: 'سیما دانش ',
     avatar:Avatar7,
-    registered: '1402/12/01',
+    email:'sima89@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
+    isActive:true
   },
   {
-    id: 9,
-    categoryId:5,
+    _id: 9,
     title:"استخدام برنامه نویس php",
     employerName: 'سیما دانش ',
     avatar:Avatar7,
-    registered: '1402/12/01',
+    email:'sima89@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
+    isActive:true
   },
   {
-    id: 10,
-    categoryId:5,
+    _id: 10,
     title:"استخدام برنامه نویس php",
     employerName: 'سیما دانش ',
     avatar:Avatar7,
-    registered: '1402/12/01',
+    email:'sima89@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
+    isAction:true
   },
   {
-    id: 11,
-    categoryId:5,
+    _id: 11,
     title:"استخدام برنامه نویس php",
     employerName: 'سیما دانش ',
     avatar:Avatar7,
-    registered: '1402/12/01',
+    email:'sima89@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
+    isActive:true
   },
   {
-    id: 12,
-    categoryId:5,
+    _id: 12,
     title:"استخدام برنامه نویس php",
     employerName: 'سیما دانش ',
     avatar:Avatar7,
-    registered: '1402/12/01',
+    email:'sima89@gmail.com',
+    date: '1402/12/01',
     caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
+    isActive:false
   },
-  {
-    id: 13,
-    categoryId:5,
-    title:"استخدام برنامه نویس php",
-    employerName: 'سیما دانش ',
-    avatar:Avatar7,
-    registered: '1402/12/01',
-    caption:'استخدام نیروی برنامه نویس وب تمام وقت،آشنا به فضای وب و اینترنت ، آشنا به سیستم های مدیریت محتوا و ،آشنا به php mysql seo',
-    images:[
-      img1,
-      img2,
-      img3,
-    ],
-    state:"فعال"
-  },
- 
+
 ]
+
+export default advertisingData;

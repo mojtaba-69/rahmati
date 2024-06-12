@@ -8,11 +8,36 @@ import {
   CImage,
 } from "@coreui/react";
 import { CSmartTable } from "@coreui/react-pro";
-import categoryData from "../category-data";
-import { useState } from "react";
+import categoryData from "../categoryData";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 const CategoryList = () => {
   const [details, setDetails] = useState([]);
+  const [categoryList, setCategoryList] = useState(categoryData);
+
+  useEffect(() => {
+    getCategories();
+  }, []);
+
+  const getCategories = () => {
+    axios
+      .get("http://localhost:5000/api/admin/categories", {
+        headers: {
+          "x-auth-token": window.localStorage.token,
+        },
+      })
+      .then((res) => {
+        if (res.status === 200) {
+          setCategoryList(res.data.data.cats);
+          console.log(res.data.data.cats);
+        }
+      })
+      .catch((err) => {
+        console.log("error:" + err);
+      });
+  };
+  //---------------------------------
   const columns = [
     {
       key: "title",
@@ -22,7 +47,7 @@ const CategoryList = () => {
       _style: { width: "20%" },
     },
     {
-      key: "registered",
+      key: "date",
       label: "زمان ایجاد",
       sorter: false,
       _style: { width: "20%" },
@@ -72,7 +97,7 @@ const CategoryList = () => {
             columnFilter
             columnSorter
             // footer
-            items={categoryData}
+            items={categoryList}
             // itemsPerPageSelect
             // itemsPerPage={1}
             pagination
@@ -90,10 +115,10 @@ const CategoryList = () => {
                   </td>
                 );
               },
-              registered: (item) => {
+              date: (item) => {
                 return (
                   <td>
-                    <span>{item.registered}</span>
+                    <span>{item.date}</span>
                   </td>
                 );
               },
@@ -106,10 +131,9 @@ const CategoryList = () => {
                       shape="square"
                       size="sm"
                       onClick={() => {
-                        toggleDetails(item.id);
+                        toggleDetails(item._id);
                       }}
                     >
-                      {/* {details.includes(item.id) ? "Hide" : "Show"} */}
                       توضیحات
                     </CButton>
                   </td>
@@ -117,7 +141,7 @@ const CategoryList = () => {
               },
               details: (item) => {
                 return (
-                  <CCollapse visible={details.includes(item.id)}>
+                  <CCollapse visible={details.includes(item._id)}>
                     <CCardBody className="p-4 bg-light rounded text-end ">
                       <div>
                         <h6 className="fw-bold">{"توضیحات"}</h6>
